@@ -38,7 +38,19 @@ function portfolio_pro_register_required_plugins() {
         array(
             'name'      => 'Advanced Custom Fields',
             'slug'      => 'advanced-custom-fields',
-            'required'  => true,        ),
+            'required'  => true,
+        ),
+        array(
+            'name'      => 'Elementor',
+            'slug'      => 'elementor',
+            'required'  => false,
+        ),
+        array(
+            'name'      => 'Elementor Pro',
+            'slug'      => 'elementor-pro',
+            'required'  => false,
+            'external_url' => 'https://elementor.com/pro/',
+        ),
     );
     
     // Configuration for plugin installer
@@ -89,8 +101,7 @@ function portfolio_pro_setup() {
     
     // Widget selective refresh
     add_theme_support('customize-selective-refresh-widgets');
-    
-    // Custom logo support
+      // Custom logo support
     add_theme_support(
         'custom-logo',
         array(
@@ -100,6 +111,21 @@ function portfolio_pro_setup() {
             'flex-height' => true,
         )
     );
+    
+    // Elementor support
+    add_theme_support('elementor');
+    
+    // Elementor Editor
+    add_theme_support('elementor-editor');
+    
+    // Wide Alignment
+    add_theme_support('align-wide');
+    
+    // Editor styles
+    add_theme_support('editor-styles');
+    
+    // Responsive embeds
+    add_theme_support('responsive-embeds');
 }
 add_action('after_setup_theme', 'portfolio_pro_setup');
 
@@ -171,7 +197,7 @@ function portfolio_pro_scripts() {
         array('portfolio-pro-main'), 
         $version // Use dynamic version for cache busting
     );
-
+    
     wp_enqueue_style(
         'portfolio-pro-footer', 
         get_template_directory_uri() . '/assets/css/footer.css', 
@@ -1951,4 +1977,673 @@ function portfolio_pro_force_local_avatars() {
     add_filter('pre_option_show_avatars', '__return_zero');
 }
 add_action('init', 'portfolio_pro_force_local_avatars');
+
+/**
+ * Elementor Support & Integration
+ * 
+ * Adds comprehensive Elementor support including theme locations,
+ * header/footer builder integration, and styling compatibility.
+ */
+
+/**
+ * Register Elementor theme locations
+ */
+function portfolio_pro_elementor_theme_locations() {
+    if (function_exists('elementor_theme_do_location')) {
+        // Register theme locations for Elementor Pro
+        add_theme_support('elementor-theme-locations', array(
+            'header',
+            'footer',
+            'single',
+            'archive',
+        ));
+    }
+}
+add_action('after_setup_theme', 'portfolio_pro_elementor_theme_locations');
+
+/**
+ * Elementor Pro Header/Footer Builder Support
+ */
+function portfolio_pro_elementor_header_footer_support() {
+    // Add support for Elementor Pro Header & Footer Builder
+    add_theme_support('elementor-header-footer');
+}
+add_action('after_setup_theme', 'portfolio_pro_elementor_header_footer_support');
+
+/**
+ * Add Elementor custom CSS support
+ */
+function portfolio_pro_elementor_custom_css() {
+    if (class_exists('\Elementor\Plugin')) {
+        // Ensure Elementor's CSS is loaded properly
+        add_action('wp_head', function() {
+            if (class_exists('\Elementor\Core\Files\CSS\Post')) {
+                $css_file = new \Elementor\Core\Files\CSS\Post(get_the_ID());
+                $css_file->enqueue();
+            }
+        });
+    }
+}
+add_action('wp_enqueue_scripts', 'portfolio_pro_elementor_custom_css');
+
+/**
+ * Elementor compatibility styles
+ */
+function portfolio_pro_elementor_styles() {
+    if (class_exists('\Elementor\Plugin')) {
+        wp_add_inline_style('portfolio-pro-style', '
+            /* Elementor Compatibility Styles */
+            .elementor-page .site-main {
+                width: 100%;
+                max-width: none;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .elementor-page .container {
+                max-width: none;
+                padding: 0;
+            }
+            
+            .elementor-section-wrap {
+                overflow: hidden;
+            }
+            
+            /* Ensure theme header/footer work with Elementor */
+            .elementor-location-header,
+            .elementor-location-footer {
+                width: 100%;
+            }
+            
+            /* Fix Elementor editor styles */
+            .elementor-editor-active .site-header,
+            .elementor-editor-active .site-footer {
+                position: relative !important;
+            }
+        ');
+    }
+}
+add_action('wp_enqueue_scripts', 'portfolio_pro_elementor_styles');
+
+/**
+ * Elementor Pro theme builder conditions
+ */
+function portfolio_pro_elementor_theme_builder_conditions() {
+    if (class_exists('\ElementorPro\Modules\ThemeBuilder\Module')) {
+        // Add custom conditions for theme builder
+        add_filter('elementor/theme/conditions/get_locations', function($locations) {
+            $locations['portfolio'] = [
+                'label' => __('Portfolio', 'portfolio-pro'),
+                'public' => true,
+                'object_type' => 'post_type',
+            ];
+            return $locations;
+        });
+    }
+}
+add_action('init', 'portfolio_pro_elementor_theme_builder_conditions');
+
+/**
+ * Override theme templates with Elementor
+ */
+function portfolio_pro_elementor_override_templates($template) {
+    if (class_exists('\Elementor\Plugin')) {
+        // Check if Elementor Pro theme builder is active
+        if (function_exists('elementor_theme_do_location')) {
+            // Let Elementor handle the template if it has a custom one
+            $elementor_template = \ElementorPro\Modules\ThemeBuilder\Module::instance()->get_locations_manager()->do_location('single');
+            if ($elementor_template) {
+                return get_template_directory() . '/elementor-template.php';
+            }
+        }
+    }
+    return $template;
+}
+add_filter('template_include', 'portfolio_pro_elementor_override_templates');
+
+/**
+ * Add Elementor widgets category for theme
+ */
+function portfolio_pro_elementor_widget_categories($elements_manager) {
+    if (class_exists('\Elementor\Plugin')) {
+        $elements_manager->add_category(
+            'portfolio-pro-widgets',
+            [
+                'title' => __('Portfolio Pro Widgets', 'portfolio-pro'),
+                'icon' => 'fa fa-briefcase',
+            ]
+        );
+    }
+}
+add_action('elementor/elements/categories_registered', 'portfolio_pro_elementor_widget_categories');
+
+/**
+ * Ensure theme works with Elementor Canvas template
+ */
+function portfolio_pro_elementor_canvas_support() {
+    if (class_exists('\Elementor\Plugin')) {
+        // Add body class for Elementor canvas
+        add_filter('body_class', function($classes) {
+            if (\Elementor\Plugin::$instance->preview->is_preview_mode()) {
+                $classes[] = 'elementor-preview';
+            }
+            return $classes;
+        });
+    }
+}
+add_action('init', 'portfolio_pro_elementor_canvas_support');
+
+/**
+ * Register Elementor Pro locations if available
+ */
+function portfolio_pro_register_elementor_locations() {
+    if (function_exists('elementor_theme_do_location')) {
+        // Register locations for Elementor Pro Theme Builder
+        elementor_theme_do_location('header');
+        elementor_theme_do_location('footer');
+    }
+}
+
+/**
+ * Elementor editor improvements
+ */
+function portfolio_pro_elementor_editor_enhancements() {
+    if (class_exists('\Elementor\Plugin') && \Elementor\Plugin::$instance->editor->is_edit_mode()) {
+        // Add editor-specific styles
+        wp_add_inline_style('portfolio-pro-style', '
+            /* Elementor Editor Enhancements */
+            .elementor-editor-active body {
+                overflow-x: auto !important;
+            }
+            
+            .elementor-editor-active .site-header {
+                position: static !important;
+            }
+            
+            .elementor-editor-active .sticky-header {
+                position: static !important;
+            }
+        ');
+    }
+}
+add_action('wp_enqueue_scripts', 'portfolio_pro_elementor_editor_enhancements');
+
+/**
+ * Load custom Elementor widgets
+ */
+function stylefolio_load_elementor_widgets() {
+    if (class_exists('\Elementor\Plugin')) {
+        require_once get_template_directory() . '/inc/elementor-widgets.php';
+    }
+}
+add_action('elementor/widgets/widgets_registered', 'stylefolio_load_elementor_widgets', 10);
+
+/**
+ * Enable Elementor editing for all post types
+ */
+function portfolio_pro_enable_elementor_editing() {
+    // Add Elementor support to post types
+    add_post_type_support('page', 'elementor');
+    add_post_type_support('post', 'elementor');
+    add_post_type_support('portfolio', 'elementor');
+    
+    // Add custom post types if they exist
+    $custom_post_types = get_post_types(['_builtin' => false], 'names');
+    foreach ($custom_post_types as $post_type) {
+        add_post_type_support($post_type, 'elementor');
+    }
+}
+add_action('init', 'portfolio_pro_enable_elementor_editing', 20);
+
+/**
+ * Force Elementor to recognize theme compatibility
+ */
+function portfolio_pro_force_elementor_compatibility() {
+    if (class_exists('\Elementor\Plugin')) {
+        // Force Elementor to recognize theme as compatible
+        update_option('elementor_disable_color_schemes', 'yes');
+        update_option('elementor_disable_typography_schemes', 'yes');
+        update_option('elementor_load_fa4_shim', 'yes');
+        
+        // Enable Elementor for the theme
+        if (!get_option('elementor_theme_builder_v2')) {
+            update_option('elementor_theme_builder_v2', 'yes');
+        }
+    }
+}
+add_action('after_switch_theme', 'portfolio_pro_force_elementor_compatibility');
+add_action('admin_init', 'portfolio_pro_force_elementor_compatibility');
+
+/**
+ * Add Elementor edit link to post/page edit screens
+ */
+function portfolio_pro_add_elementor_edit_button() {
+    if (!class_exists('\Elementor\Plugin')) {
+        return;
+    }
+    
+    global $post;
+    if (!$post) {
+        return;
+    }
+    
+    // Check if current post type supports Elementor
+    if (!post_type_supports($post->post_type, 'elementor')) {
+        return;
+    }
+      if (!\Elementor\User::is_current_user_can_edit($post->ID)) {
+        return;
+    }
+    
+    // Get proper Elementor edit URL
+    try {
+        $document = \Elementor\Plugin::$instance->documents->get($post->ID);
+        $edit_url = $document ? $document->get_edit_url() : admin_url('post.php?post=' . $post->ID . '&action=elementor');
+    } catch (Exception $e) {
+        $edit_url = admin_url('post.php?post=' . $post->ID . '&action=elementor');
+    }
+    ?>
+    <script>
+    jQuery(document).ready(function($) {
+        // Add Elementor edit button to post edit screen
+        if ($('.page-title-action').length) {
+            $('.page-title-action').after(
+                '<a href="<?php echo esc_url($edit_url); ?>" class="page-title-action elementor-edit-btn" style="background: #9b0a46; border-color: #9b0a46;">' +
+                '<?php echo esc_js(__('Edit with Elementor', 'portfolio-pro')); ?>' +
+                '</a>'
+            );
+        }
+        
+        // Add to post row actions in list view
+        $('body.edit-php .row-actions').each(function() {
+            var $row = $(this).closest('tr');
+            var postId = $row.attr('id');
+            if (postId) {
+                var id = postId.replace('post-', '');
+                var editUrl = '<?php echo admin_url('post.php?post='); ?>' + id + '&action=elementor';
+                $(this).append(' | <span class="elementor"><a href="' + editUrl + '"><?php echo esc_js(__('Elementor', 'portfolio-pro')); ?></a></span>');
+            }
+        });
+    });
+    </script>
+    <style>
+    .elementor-edit-btn {
+        background: #9b0a46 !important;
+        border-color: #9b0a46 !important;
+        color: white !important;
+    }
+    .elementor-edit-btn:hover {
+        background: #7a0837 !important;
+        border-color: #7a0837 !important;
+    }
+    </style>
+    <?php
+}
+add_action('admin_footer-post.php', 'portfolio_pro_add_elementor_edit_button');
+add_action('admin_footer-post-new.php', 'portfolio_pro_add_elementor_edit_button');
+add_action('admin_footer-edit.php', 'portfolio_pro_add_elementor_edit_button');
+
+/**
+ * Handle Elementor edit action
+ */
+function portfolio_pro_handle_elementor_edit_action() {
+    if (!class_exists('\Elementor\Plugin')) {
+        return;
+    }
+    
+    if (isset($_GET['action']) && $_GET['action'] === 'elementor' && isset($_GET['post'])) {
+        $post_id = intval($_GET['post']);
+        
+        // Validate post exists
+        $post = get_post($post_id);
+        if (!$post) {
+            wp_die(__('Post not found.', 'portfolio-pro'));
+        }
+        
+        // Check permissions
+        if (!current_user_can('edit_post', $post_id)) {
+            wp_die(__('You do not have permission to edit this post with Elementor.', 'portfolio-pro'));
+        }
+        
+        // Check if post type supports Elementor
+        if (!post_type_supports($post->post_type, 'elementor')) {
+            wp_die(__('This post type does not support Elementor editing.', 'portfolio-pro'));
+        }
+        
+        // Get proper Elementor edit URL
+        $elementor_edit_url = add_query_arg([
+            'elementor' => '',
+            'post' => $post_id,
+        ], admin_url(''));
+        
+        // Alternative method to get edit URL
+        if (method_exists('\Elementor\Plugin', 'instance')) {
+            try {
+                $document = \Elementor\Plugin::$instance->documents->get($post_id);
+                if ($document) {
+                    $elementor_edit_url = $document->get_edit_url();
+                }
+            } catch (Exception $e) {
+                // Fallback to manual URL construction
+                $elementor_edit_url = add_query_arg([
+                    'elementor' => '',
+                    'post' => $post_id,
+                ], home_url('/'));
+            }
+        }
+        
+        wp_redirect($elementor_edit_url);
+        exit;
+    }
+}
+add_action('admin_init', 'portfolio_pro_handle_elementor_edit_action');
+
+/**
+ * Force refresh Elementor capabilities
+ */
+function portfolio_pro_refresh_elementor_capabilities() {
+    if (class_exists('\Elementor\Plugin')) {
+        // Clear any cached capabilities
+        wp_cache_delete('elementor_user_capabilities');
+        
+        // Force Elementor to re-check user permissions
+        if (current_user_can('edit_posts')) {
+            add_filter('elementor/user/is_current_user_can_edit', '__return_true');
+        }
+    }
+}
+add_action('admin_init', 'portfolio_pro_refresh_elementor_capabilities');
+
+/**
+ * Initialize Elementor database and settings for theme
+ */
+function portfolio_pro_init_elementor_settings() {
+    if (!class_exists('\Elementor\Plugin')) {
+        return;
+    }
+    
+    // Set theme compatibility options
+    $elementor_options = [
+        'elementor_container_width' => '1200',
+        'elementor_cpt_support' => ['page', 'post'],
+        'elementor_css_print_method' => 'external',
+        'elementor_default_generic_fonts' => 'Sans-serif',
+        'elementor_disable_color_schemes' => 'yes',
+        'elementor_disable_typography_schemes' => 'yes',
+        'elementor_editor_break_lines' => '1',
+        'elementor_exclude_user_roles' => [],
+        'elementor_global_image_lightbox' => 'yes',
+        'elementor_load_fa4_shim' => 'yes',
+        'elementor_space_between_widgets' => '20',
+        'elementor_stretched_section_container' => '.site, .site-main',
+        'elementor_page_title_selector' => 'h1.entry-title',
+        'elementor_viewport_lg' => '1025',
+        'elementor_viewport_md' => '768',
+    ];
+    
+    foreach ($elementor_options as $option_name => $option_value) {
+        if (get_option($option_name) === false) {
+            update_option($option_name, $option_value);
+        }
+    }
+    
+    // Flush rewrite rules to ensure proper URL handling
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'portfolio_pro_init_elementor_settings');
+
+/**
+ * Add theme-specific Elementor kit settings
+ */
+function portfolio_pro_setup_elementor_kit() {
+    if (!class_exists('\Elementor\Plugin')) {
+        return;
+    }
+    
+    // Wait for Elementor to be fully loaded
+    add_action('elementor/loaded', function() {
+        // Create default kit if it doesn't exist
+        $kit_id = \Elementor\Plugin::$instance->kits_manager->get_active_id();
+        
+        if (!$kit_id) {
+            $kit_id = \Elementor\Plugin::$instance->kits_manager->create_default();
+        }
+        
+        // Set theme colors in kit
+        $kit_settings = [
+            'system_colors' => [
+                [
+                    '_id' => 'primary',
+                    'title' => __('Primary Color', 'portfolio-pro'),
+                    'color' => '#007cba',
+                ],
+                [
+                    '_id' => 'secondary',
+                    'title' => __('Secondary Color', 'portfolio-pro'),
+                    'color' => '#666666',
+                ],
+                [
+                    '_id' => 'text',
+                    'title' => __('Text Color', 'portfolio-pro'),
+                    'color' => '#333333',
+                ],
+                [
+                    '_id' => 'accent',
+                    'title' => __('Accent Color', 'portfolio-pro'),
+                    'color' => '#ff6b6b',
+                ],
+            ],
+            'system_typography' => [
+                [
+                    '_id' => 'primary',
+                    'title' => __('Primary Font', 'portfolio-pro'),
+                    'typography_typography' => 'custom',
+                    'typography_font_family' => 'Roboto',
+                    'typography_font_weight' => '400',
+                ],
+                [
+                    '_id' => 'secondary',
+                    'title' => __('Secondary Font', 'portfolio-pro'),
+                    'typography_typography' => 'custom',
+                    'typography_font_family' => 'Open Sans',
+                    'typography_font_weight' => '600',
+                ],
+            ],
+        ];
+        
+        // Update kit settings
+        if ($kit_id) {
+            $kit = \Elementor\Plugin::$instance->documents->get($kit_id);
+            if ($kit) {
+                $kit->update_settings($kit_settings);
+            }
+        }
+    });
+}
+add_action('init', 'portfolio_pro_setup_elementor_kit');
+
+/**
+ * Debug function to check Elementor status
+ */
+function portfolio_pro_debug_elementor_status() {
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    
+    if (isset($_GET['debug_elementor']) && $_GET['debug_elementor'] === '1') {
+        echo '<div style="background: #fff; padding: 20px; margin: 20px; border: 1px solid #ccc;">';
+        echo '<h3>Elementor Debug Information</h3>';
+        echo '<p><strong>Elementor Active:</strong> ' . (class_exists('\Elementor\Plugin') ? 'Yes' : 'No') . '</p>';
+        
+        if (class_exists('\Elementor\Plugin')) {
+            echo '<p><strong>Elementor Version:</strong> ' . ELEMENTOR_VERSION . '</p>';
+            echo '<p><strong>Post Types with Elementor Support:</strong></p>';
+            echo '<ul>';
+            
+            $post_types = get_post_types(['public' => true], 'objects');
+            foreach ($post_types as $post_type) {
+                $supports = post_type_supports($post_type->name, 'elementor') ? 'Yes' : 'No';
+                echo '<li>' . $post_type->label . ' (' . $post_type->name . '): ' . $supports . '</li>';
+            }
+            echo '</ul>';
+            
+            $current_user = wp_get_current_user();
+            echo '<p><strong>Current User Can Edit:</strong> ' . (\Elementor\User::is_current_user_can_edit() ? 'Yes' : 'No') . '</p>';
+            echo '<p><strong>User Roles:</strong> ' . implode(', ', $current_user->roles) . '</p>';
+        }
+        echo '</div>';
+    }
+}
+add_action('wp_footer', 'portfolio_pro_debug_elementor_status');
+add_action('admin_footer', 'portfolio_pro_debug_elementor_status');
+
+/**
+ * Fix Elementor integration issues
+ */
+function portfolio_pro_fix_elementor_integration() {
+    if (!class_exists('\Elementor\Plugin')) {
+        return;
+    }
+    
+    // Ensure Elementor can handle our post types
+    add_filter('elementor/utils/get_public_post_types', function($post_types) {
+        // Make sure pages and posts are included
+        if (!in_array('page', $post_types)) {
+            $post_types['page'] = 'page';
+        }
+        if (!in_array('post', $post_types)) {
+            $post_types['post'] = 'post';
+        }
+        return $post_types;
+    });
+    
+    // Fix Elementor editor URL generation
+    add_filter('elementor/document/urls/edit', function($url, $document) {
+        if ($document) {
+            $post_id = $document->get_main_id();
+            return add_query_arg([
+                'elementor' => '',
+                'post' => $post_id,
+            ], admin_url(''));
+        }
+        return $url;
+    }, 10, 2);
+    
+    // Ensure proper permissions
+    add_filter('elementor/user/is_current_user_can_edit', function($can_edit, $post_id) {
+        if (!$post_id) {
+            $post_id = get_the_ID();
+        }
+        
+        if (!$post_id) {
+            return $can_edit;
+        }
+        
+        // Check if user can edit the post
+        return current_user_can('edit_post', $post_id);
+    }, 10, 2);
+}
+add_action('elementor/loaded', 'portfolio_pro_fix_elementor_integration');
+
+/**
+ * Force Elementor to recognize theme after plugin activation
+ */
+function portfolio_pro_elementor_after_activation() {
+    if (class_exists('\Elementor\Plugin')) {
+        // Clear Elementor cache
+        if (method_exists('\Elementor\Plugin', 'instance') && isset(\Elementor\Plugin::$instance->files_manager)) {
+            \Elementor\Plugin::$instance->files_manager->clear_cache();
+        }
+        
+        // Update theme support options
+        update_option('elementor_cpt_support', ['page', 'post']);
+        update_option('elementor_disable_color_schemes', 'yes');
+        update_option('elementor_disable_typography_schemes', 'yes');
+        update_option('elementor_container_width', '1200');
+        
+        // Flush rewrite rules
+        flush_rewrite_rules();
+    }
+}
+add_action('activated_plugin', 'portfolio_pro_elementor_after_activation');
+
+/**
+ * Add custom CSS for Elementor admin interface
+ */
+function portfolio_pro_elementor_admin_css() {
+    if (!class_exists('\Elementor\Plugin')) {
+        return;
+    }
+    ?>
+    <style>
+    /* Elementor admin bar button styling */
+    #wp-admin-bar-elementor-edit .ab-item {
+        color: #fff !important;
+        background: #9b0a46 !important;
+    }
+    #wp-admin-bar-elementor-edit:hover .ab-item {
+        background: #7a0837 !important;
+    }
+    
+    /* Elementor edit button in post list */
+    .elementor a {
+        color: #9b0a46 !important;
+        font-weight: bold;
+    }
+    .elementor a:hover {
+        color: #7a0837 !important;
+    }
+    </style>
+    <?php
+}
+add_action('admin_head', 'portfolio_pro_elementor_admin_css');
+add_action('wp_head', 'portfolio_pro_elementor_admin_css');
+
+/**
+ * Emergency Elementor fix - Add this temporarily to test
+ */
+function portfolio_pro_emergency_elementor_fix() {
+    if (!class_exists('\Elementor\Plugin')) {
+        return;
+    }
+    
+    // Add a simple test button to admin bar for any logged-in user
+    add_action('admin_bar_menu', function($wp_admin_bar) {
+        if (is_singular() && current_user_can('edit_posts')) {
+            $post_id = get_the_ID();
+            if ($post_id) {
+                // Create a direct link to Elementor editor
+                $elementor_url = home_url('/?elementor&post=' . $post_id);
+                
+                $wp_admin_bar->add_node([
+                    'id' => 'test-elementor-edit',
+                    'title' => 'Test Elementor Edit',
+                    'href' => $elementor_url,
+                    'meta' => [
+                        'target' => '_blank',
+                        'class' => 'test-elementor-button',
+                    ],
+                ]);
+            }
+        }
+    }, 999);
+    
+    // Also add to any page/post edit screen
+    add_action('admin_footer', function() {
+        global $post;
+        if ($post && current_user_can('edit_post', $post->ID)) {
+            $elementor_url = home_url('/?elementor&post=' . $post->ID);
+            echo '<script>
+            jQuery(document).ready(function($) {
+                if ($(".page-title-action").length) {
+                    $(".page-title-action").after(
+                        "<a href=\"' . esc_url($elementor_url) . '\" class=\"page-title-action\" style=\"background: #e74c3c; border-color: #e74c3c; margin-left: 5px;\" target=\"_blank\">Test Elementor Direct</a>"
+                    );
+                }
+            });
+            </script>';
+        }
+    });
+}
+add_action('init', 'portfolio_pro_emergency_elementor_fix');
 
