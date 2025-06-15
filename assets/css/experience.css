@@ -1,0 +1,687 @@
+/**
+ * StyleFolio - Experience Section
+ * Work experience and career timeline
+ * 
+ * Note: Background effects are loaded from background-effects.css
+ * 
+ * Table of Contents:
+ * 1. Experience Layout
+ * 2. Timeline Design
+ * 3. Experience Cards
+ * 4. Responsive Design
+ */
+
+/* ====================================
+   1. EXPERIENCE LAYOUT
+   ==================================== */
+
+.experience-section {
+    position: relative;
+    padding: 100px 0;
+    background: linear-gradient(90deg, #12122a, #1e1e42);
+    color: var(--text-primary);
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* ====================================
+   2. EXPERIENCE BACKGROUND EFFECTS
+   ==================================== */
+
+/* Experience section uses grid and particle effects to emphasize career timeline */
+.experience-section .section-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.experience-section .bg-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(138, 43, 226, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 43, 226, 0.3) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center center;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.experience-section .bg-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(rgba(0, 255, 255, 0.8) 2px, transparent 2px),
+        radial-gradient(rgba(138, 43, 226, 0.6) 1px, transparent 1px);
+    background-size: 80px 80px, 120px 120px;
+    background-position: 0 0, 40px 40px;
+    opacity: 0.1;
+    animation: particleMove 150s linear infinite;
+    z-index: 2;
+}
+
+.experience-section .bg-glow {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 40%;
+    background: radial-gradient(ellipse at center, 
+                               rgba(138, 43, 226, 0.15) 0%, 
+                               rgba(0, 255, 255, 0.1) 40%, 
+                               transparent 70%);
+    filter: blur(40px);
+    z-index: 3;
+    opacity: 0.4;
+    animation: glowPulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% {
+        opacity: 0.2;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* Particle Animation */
+@keyframes particleMove {
+    0% {
+        background-position: 0 0, 40px 40px;
+    }
+    100% {
+        background-position: 1000px 500px, 1040px 540px;
+    }
+}
+
+/* Section Header */
+.experience-section .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.experience-section .section-subtitle {
+    display: inline-block;
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    font-weight: 500;
+    margin-bottom: 15px;
+    position: relative;
+    letter-spacing: 1px;
+}
+
+.experience-section .section-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin: 0 0 20px;
+    background: linear-gradient(90deg, var(--text-color), var(--secondary-color) 70%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    display: inline-block;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+.experience-section .section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.experience-section .divider-line {
+    height: 2px;
+    width: 100px;
+    background: linear-gradient(90deg, transparent, var(--accent-color));
+}
+
+.experience-section .divider-line:last-child {
+    background: linear-gradient(90deg, var(--accent-color), transparent);
+}
+
+.experience-section .divider-icon {
+    color: var(--secondary-color);
+    margin: 0 15px;
+    font-size: 1.2rem;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+/* Experience Container */
+.experience-container {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+/* Timeline Layout */
+.experience-timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(180deg, 
+                               transparent 0%, 
+                               rgba(0, 255, 255, 0.4) 20%, 
+                               rgba(138, 43, 226, 0.6) 50%, 
+                               rgba(0, 255, 255, 0.4) 80%, 
+                               transparent 100%);
+    transform: translateX(-50%);
+    border-radius: 1px;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+.timeline-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, 
+                               transparent 0%, 
+                               rgba(0, 255, 255, 0.8) 50%, 
+                               transparent 100%);
+    animation: timelineFlow 3s ease-in-out infinite;
+}
+
+@keyframes timelineFlow {
+    0% {
+        background-position: 0 -100px;
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        background-position: 0 100px;
+        opacity: 0.6;
+    }
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 60px;
+    width: 100%;
+    display: flex;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-item.left {
+    justify-content: flex-start;
+    padding-right: calc(50% + 40px);
+}
+
+.timeline-item.right {
+    justify-content: flex-end;
+    padding-left: calc(50% + 40px);
+}
+
+/* Timeline Markers with Icons */
+.timeline-marker {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background: rgba(20, 20, 40, 0.9);
+    border: 2px solid var(--secondary-color);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--secondary-color);
+    backdrop-filter: blur(10px);
+}
+
+.timeline-marker:hover {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+    border-color: rgba(0, 255, 255, 0.8);
+}
+
+.timeline-marker::before {
+    content: '\f017'; /* FontAwesome clock icon for timeline */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+
+/* Use consistent clock icon for all timeline items */
+.timeline-item:nth-child(1) .timeline-marker::before,
+.timeline-item:nth-child(2) .timeline-marker::before,
+.timeline-item:nth-child(3) .timeline-marker::before,
+.timeline-item:nth-child(4) .timeline-marker::before,
+.timeline-item:nth-child(5) .timeline-marker::before {
+    content: '\f017'; /* Clock icon for timeline consistency */
+}
+
+.timeline-content {
+    position: relative;
+    padding: 30px;
+    background: rgba(20, 20, 40, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 450px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.timeline-item.left .timeline-content {
+    margin-right: 0;
+}
+
+.timeline-item.right .timeline-content {
+    margin-left: 0;
+}
+
+.timeline-content:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    border-color: rgba(0, 255, 255, 0.4);
+    background: rgba(20, 20, 40, 0.7);
+}
+
+.experience-date {
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+}
+
+.job-type {
+    font-size: 0.8rem;
+    background: rgba(0, 255, 255, 0.1);
+    color: var(--secondary-color);
+    padding: 4px 12px;
+    border-radius: 25px;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.job-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.company-info {
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.company-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+a.company-name:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.company-location {
+    font-size: 14px;
+    color: var(--text-tertiary);
+}
+
+.company-location i {
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.responsibilities {
+    margin-top: 20px;
+}
+
+.responsibilities ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+.responsibilities li {
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+    position: relative;
+    padding-left: 5px;
+}
+
+.responsibilities li:last-child {
+    margin-bottom: 0;
+}
+
+.technologies {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.technologies h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--text-primary);
+}
+
+.technologies h4 i {
+    margin-right: 5px;
+    color: var(--primary-color);
+}
+
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tech-tag {
+    font-size: 0.8rem;
+    background: rgba(0, 255, 255, 0.1);
+    color: var(--secondary-color);
+    padding: 6px 15px;
+    border-radius: 25px;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-tag:hover {
+    background: rgba(0, 255, 255, 0.2);
+    color: var(--text-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+}
+
+/* Card Layout */
+.experience-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.experience-card {
+    background: rgba(20, 20, 40, 0.5);
+    border-radius: 10px;
+    padding: 30px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.experience-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(0, 255, 255, 0.3);
+}
+
+.company-logo {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(0, 255, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.company-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.card-header {
+    margin-bottom: 15px;
+}
+
+.card-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--text-tertiary);
+}
+
+.card-meta i {
+    margin-right: 5px;
+    color: var(--primary-color);
+    opacity: 0.8;
+}
+
+.experience-card .responsibilities {
+    flex: 1;
+}
+
+.experience-card .responsibilities h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 15px;
+    color: var(--text-primary);
+}
+
+.experience-card .responsibilities ul {
+    padding-left: 20px;
+}
+
+.experience-card .technologies {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+/* Empty State */
+.experience-empty {
+    padding: 60px 0;
+    text-align: center;
+}
+
+.experience-empty .empty-message {
+    max-width: 500px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.experience-empty .empty-message i {
+    font-size: 48px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.experience-empty .empty-message h3 {
+    margin: 0 0 15px;
+    font-size: 24px;
+}
+
+.experience-empty .empty-message p {
+    margin: 0 0 25px;
+    color: var(--text-secondary);
+}
+
+/* Animations */
+[data-animation="fade-in"] {
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+[data-animation="fade-in"].animated {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+[data-animation="fade-in-up"] {
+    opacity: 0;
+    transform: translateY(20px);
+    animation-fill-mode: forwards;
+}
+
+[data-animation="fade-in-up"].animated {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+    .timeline-line {
+        left: 30px;
+    }
+    
+    .timeline-item.left,
+    .timeline-item.right {
+        justify-content: flex-start;
+        padding-right: 0;
+        padding-left: 70px;
+    }
+    
+    .timeline-marker {
+        left: 30px;
+    }
+    
+    .timeline-item.left .timeline-content,
+    .timeline-item.right .timeline-content {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .experience-section {
+        padding: 60px 0;
+    }
+    
+    .experience-section .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .timeline-content {
+        padding: 20px;
+    }
+    
+    .job-title {
+        font-size: 1.2rem;
+    }
+    
+    .experience-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .timeline-line {
+        left: 20px;
+    }
+    
+    .timeline-item.left,
+    .timeline-item.right {
+        padding-left: 50px;
+    }
+    
+    .timeline-marker {
+        left: 20px;
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
+    }
+    
+    .timeline-item.left .timeline-content,
+    .timeline-item.right .timeline-content {
+        margin-left: 20px;
+        width: calc(100% - 20px);
+    }
+    
+    .experience-date {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .experience-section .section-title {
+        font-size: 2rem;
+    }
+}

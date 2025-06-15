@@ -1,0 +1,19 @@
+/*
+Theme Name: Stylefolio
+Theme URI: https://yourwebsite.com/stylefolio-theme  
+Author: Your Name
+Author URI: https://yourwebsite.com
+Description: A modern, professional one-page portfolio theme perfect for developers, designers, and creative professionals. Features smooth animations, responsive design, and easy customization through WordPress Customizer and ACF fields.
+Version: 1.0
+Requires at least: 5.6
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: stylefolio
+Tags: portfolio, one-page, responsive, custom-colors, custom-menu, featured-images, business, creative, developer
+*/
+
+/* Import other stylesheets */
+@import url('assets/css/main.css');
+@import url('assets/css/responsive.css');

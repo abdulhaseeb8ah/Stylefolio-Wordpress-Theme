@@ -1,0 +1,525 @@
+/**
+ * StyleFolio - Footer Styles
+ * Site footer with contact information and links
+ * 
+ * Table of Contents:
+ * 1. Footer Structure
+ * 2. Footer Content
+ * 3. Social Links
+ * 4. Copyright Section
+ */
+
+/* ====================================
+   1. FOOTER STRUCTURE
+   ==================================== */
+
+.site-footer {
+    background: linear-gradient(90deg, #12122a, #1e1e42);
+    color: var(--text-color);
+    position: relative;
+    padding: 70px 0 30px;
+    margin-top: 0px;
+    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.5);
+}
+
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+    opacity: 0.7;
+}
+
+/* Shape Divider */
+.footer-shape-divider {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.footer-shape-divider svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 50px;
+    transform: rotateY(180deg);
+}
+
+.footer-shape-divider .shape-fill {
+    fill: #12122a;
+}
+
+/* Footer Grid Layout */
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* Footer Widgets */
+.footer-widget {
+    margin-bottom: 30px;
+}
+
+.footer-widget-title {
+    color: var(--text-color);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.footer-widget-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 50px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+/* About Widget */
+.footer-about {
+    grid-column: span 2;
+}
+
+.footer-logo {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.footer-logo img {
+    max-height: 50px;
+    filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.6));
+}
+
+.footer-about-text {
+    margin-bottom: 25px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+/* Links Widget */
+.footer-links ul,
+.footer-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li,
+.footer-nav li {
+    margin-bottom: 12px;
+}
+
+.footer-links a,
+.footer-nav a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+    padding-left: 15px;
+}
+
+.footer-links a::before,
+.footer-nav a::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--secondary-color);
+    transition: transform 0.3s ease;
+}
+
+.footer-links a:hover,
+.footer-nav a:hover {
+    color: var(--secondary-color);
+    transform: translateX(5px);
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+.footer-links a:hover::before,
+.footer-nav a:hover::before {
+    transform: scale(1.2);
+}
+
+/* Contact Widget */
+/* Copyright Section */
+.footer-bottom {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(0, 255, 255, 0.1);
+    text-align: center;
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.copyright a {
+    color: var(--secondary-color);
+    transition: all 0.3s ease;
+}
+
+.copyright a:hover {
+    color: var(--accent-color);
+    text-shadow: 0 0 8px rgba(255, 0, 255, 0.6);
+}
+
+/* Back to top button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: rgba(138, 43, 226, 0.2);
+    border: 1px solid var(--secondary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    text-decoration: none;
+    outline: none;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: rgba(0, 255, 255, 0.2);
+    color: var(--text-color);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+}
+
+.back-to-top:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+.back-to-top:active {
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Footer Responsive Styles */
+@media screen and (max-width: 992px) {
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-about {
+        grid-column: span 2;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .site-footer {
+        padding: 50px 0 30px;
+    }
+    
+    .footer-shape-divider {
+        top: -30px;
+        height: 30px;
+    }
+    
+    .footer-content {
+        gap: 30px;
+    }
+    
+    .footer-widget-title {
+        margin-bottom: 15px;
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+    }
+      .footer-buttons {
+        flex-direction: row;
+        gap: 15px;
+    }
+    
+    .footer-btn {
+        flex: 1;
+        padding: 12px 18px;
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-about {
+        grid-column: span 1;
+    }
+    
+    .footer-bottom {
+        margin-top: 30px;
+    }
+      .footer-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .footer-btn {
+        padding: 15px 25px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Footer animated background effect */
+.footer-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.footer-particle {
+    position: absolute;
+    background: rgba(0, 255, 255, 0.15);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+.footer-particle:nth-child(1) {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    left: 10%;
+    filter: blur(30px);
+    animation: floatParticle 20s linear infinite;
+}
+
+.footer-particle:nth-child(2) {
+    width: 150px;
+    height: 150px;
+    top: 60%;
+    left: 20%;
+    background: rgba(255, 0, 255, 0.1);
+    filter: blur(40px);
+    animation: floatParticle 25s linear infinite;
+}
+
+.footer-particle:nth-child(3) {
+    width: 80px;
+    height: 80px;
+    top: 30%;
+    left: 50%;
+    filter: blur(25px);
+    animation: floatParticle 18s linear infinite;
+}
+
+.footer-particle:nth-child(4) {
+    width: 120px;
+    height: 120px;
+    top: 70%;
+    left: 70%;
+    background: rgba(255, 0, 255, 0.1);
+    filter: blur(35px);
+    animation: floatParticle 22s linear infinite;
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    25% {
+        transform: translateY(-20px) translateX(20px);
+    }
+    50% {
+        transform: translateY(-40px) translateX(0);
+    }
+    75% {
+        transform: translateY(-20px) translateX(-20px);
+    }
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+}
+
+/* Footer content z-index to appear above particles */
+.footer-content, .footer-bottom {
+    position: relative;
+    z-index: 1;
+}
+
+/* Portfolio Sections Widget */
+.footer-sections ul,
+.footer-tech ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-sections li,
+.footer-tech li {
+    margin-bottom: 12px;
+}
+
+.footer-sections a,
+.footer-tech a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+    padding-left: 15px;
+    font-size: 0.95rem;
+}
+
+.footer-sections a::before,
+.footer-tech a::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--secondary-color);
+    transition: transform 0.3s ease;
+}
+
+.footer-sections a:hover,
+.footer-tech a:hover {
+    color: var(--secondary-color);
+    transform: translateX(5px);
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+.footer-sections a:hover::before,
+.footer-tech a:hover::before {
+    transform: scale(1.2);
+}
+
+/* CTA Widget */
+.footer-cta-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.footer-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid transparent;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+    letter-spacing: 0.5px;
+}
+
+.footer-btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-darker));
+    color: var(--text-color);
+    border: none;
+    box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+    z-index: 0;
+}
+
+.footer-btn-primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.5);
+    color: var(--text-color);
+}
+
+.footer-btn-primary:hover::before {
+    left: 100%;
+}
+
+.footer-btn-secondary {
+    background: rgba(0, 255, 255, 0.1);
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.1), inset 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+.footer-btn-secondary:hover {
+    background: rgba(0, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3), inset 0 0 15px rgba(0, 255, 255, 0.2);
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+    color: var(--secondary-color);
+}
+
+.footer-btn i {
+    font-size: 0.85rem;
+    transition: transform 0.3s ease;
+}
+
+.footer-btn:hover i {
+    transform: translateX(3px);
+}
+
+/* Hover effects for buttons */
+.footer-btn:hover i {
+    transform: translateX(3px);
+}
+
+.footer-btn:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
+}

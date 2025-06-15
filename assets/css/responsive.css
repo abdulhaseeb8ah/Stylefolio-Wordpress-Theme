@@ -1,0 +1,100 @@
+/**
+ * StyleFolio - Responsive Design
+ * Mobile-first responsive breakpoints
+ * 
+ * Breakpoints:
+ * - 992px: Tablet landscape
+ * - 768px: Tablet portrait
+ * - 576px: Large mobile
+ * - 400px: Small mobile
+ */
+
+/* ====================================
+   TABLET LANDSCAPE (992px and below)
+   ==================================== */
+
+@media screen and (max-width: 992px) {
+    .header-container {
+        padding: 0 20px;
+    }
+
+    .nav-menu li {
+        margin-left: 20px;
+    }
+    
+    .site-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* ====================================
+   TABLET PORTRAIT (768px and below)
+   ==================================== */
+
+@media screen and (max-width: 768px) {
+    .site-header {
+        height: 70px;
+    }
+    
+    #primary {
+        margin-top: 70px;
+    }
+    
+    .header-container {
+        padding: 0 15px;
+    }
+    
+    .site-title {
+        font-size: 1.3rem;
+    }
+    
+    .mobile-menu .nav-menu {
+        display: block;
+        width: 100%;
+    }
+    
+    .mobile-menu.show-mobile-menu {
+        display: block;
+        right: 0;
+    }
+}
+
+/* ====================================
+   LARGE MOBILE (576px and below)
+   ==================================== */
+
+@media screen and (max-width: 576px) {
+    .site-title {
+        font-size: 1.2rem;
+    }
+}
+
+/* ====================================
+   SMALL MOBILE (400px and below)
+   ==================================== */
+
+@media screen and (max-width: 400px) {
+    .site-title {
+        font-size: 1.1rem;
+    }
+    
+    .custom-logo {
+        max-height: 45px;
+    }
+}
+
+/* ====================================
+   WORDPRESS ADMIN BAR ADJUSTMENTS
+   ==================================== */
+
+@media screen and (max-width: 782px) {
+    .admin-bar .site-header {
+        top: 46px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .admin-bar .site-header {
+        position: fixed;
+    }
+}

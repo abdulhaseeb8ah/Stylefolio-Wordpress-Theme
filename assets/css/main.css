@@ -1,0 +1,490 @@
+/**
+ * StyleFolio - Main Stylesheet
+ * A modern, futuristic portfolio theme
+ * 
+ * Table of Contents:
+ * 1. CSS Variables
+ * 2. Reset & Base Styles
+ * 3. Typography
+ * 4. Layout Components
+ * 5. Form Elements
+ * 6. Button Styles
+ * 7. Card Components
+ * 8. Utility Classes
+ */
+
+/* ====================================
+   1. CSS VARIABLES
+   ==================================== */
+
+:root {
+    /* Primary Colors */
+    --primary-color: #8a2be2;
+    --primary-darker: #6a1fb0;
+    --secondary-color: #00ffff;
+    --accent-color: #ff00ff;
+    --highlight: #ffff00;
+    
+    /* Text Colors */
+    --text-color: #ffffff;
+    --text-secondary: #e0e0ff;
+    
+    /* Background Colors */
+    --background-color: #0a0a1a;
+    --card-background: #141428;
+    --header-bg: #12122a;
+    
+    /* Layout */
+    --header-height: 80px;
+    --transition-speed: 0.3s;
+    
+    /* Effects */
+    --box-shadow: 0 4px 20px rgba(138, 43, 226, 0.4);
+    --neon-glow: 0 0 15px rgba(0, 255, 255, 0.7);
+    --text-shadow: 0 0 8px rgba(255, 0, 255, 0.7);
+    --border-glow: 0 0 8px rgba(0, 255, 255, 0.8);
+}
+
+/* ====================================
+   2. RESET & BASE STYLES
+   ==================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--text-color);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-color: var(--background-color);
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+    background-attachment: fixed;
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: all var(--transition-speed) ease;
+}
+
+a:hover, 
+a:focus {
+    color: var(--highlight);
+    text-shadow: var(--neon-glow);
+}
+
+/* ====================================
+   3. LAYOUT COMPONENTS
+   ==================================== */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    word-wrap: normal !important;
+}
+
+#primary {
+    margin-top: var(--header-height);
+}
+
+/* Prevent scrolling when mobile menu is open */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* ====================================
+   4. BUTTON STYLES
+   ==================================== */
+
+.button, 
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-darker));
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+}
+
+.button:hover, 
+button:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(138, 43, 226, 0.4);
+    color: var(--text-color);
+}
+
+/* Button shine effect */
+.button::before,
+button::before,
+input[type="button"]::before,
+input[type="reset"]::before,
+input[type="submit"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+    z-index: -1;
+}
+
+.button:hover::before,
+button:hover::before,
+input[type="button"]:hover::before,
+input[type="reset"]:hover::before,
+input[type="submit"]:hover::before {
+    left: 100%;
+}
+
+/* Button Variants */
+.button-primary {
+    background: linear-gradient(90deg, #00c3ff, #00a6ff);
+    box-shadow: 0 4px 15px rgba(0, 195, 255, 0.3);
+}
+
+.button-primary:hover {
+    box-shadow: 0 7px 20px rgba(0, 195, 255, 0.4);
+}
+
+.button-secondary {
+    background: linear-gradient(90deg, #8a2be2, #6a1fb0);
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+}
+
+.button-secondary:hover {
+    box-shadow: 0 7px 20px rgba(138, 43, 226, 0.4);
+}
+
+.button-accent {
+    background: linear-gradient(90deg, #ff00ff, #d400d4);
+    box-shadow: 0 4px 15px rgba(255, 0, 255, 0.3);
+}
+
+.button-accent:hover {
+    box-shadow: 0 7px 20px rgba(255, 0, 255, 0.4);
+}
+
+.button-ghost {
+    background: transparent;
+    border: 2px solid var(--secondary-color);
+    box-shadow: none;
+}
+
+.button-ghost:hover {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+}
+
+/* ====================================
+   5. FORM ELEMENTS
+   ==================================== */
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"],
+textarea,
+select {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 4px;
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="range"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="week"]:focus,
+input[type="time"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="color"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+/* ====================================
+   6. CARD COMPONENTS
+   ==================================== */
+
+.card {
+    background: var(--card-background);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(138, 43, 226, 0.3);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-footer {
+    padding: 15px 20px;
+    border-top: 1px solid rgba(0, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Glowing Effect for Links */
+.glow-link {
+    position: relative;
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.glow-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background: var(--secondary-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.glow-link:hover {
+    color: var(--highlight);
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+.glow-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+/* Alert/Notice Styles */
+.alert {
+    padding: 15px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    position: relative;
+    border-left: 4px solid transparent;
+}
+
+.alert-info {
+    background: rgba(0, 195, 255, 0.1);
+    border-color: #00c3ff;
+}
+
+.alert-success {
+    background: rgba(0, 255, 128, 0.1);
+    border-color: #00ff80;
+}
+
+.alert-warning {
+    background: rgba(255, 193, 0, 0.1);
+    border-color: #ffc100;
+}
+
+.alert-danger {
+    background: rgba(255, 71, 87, 0.1);
+    border-color: #ff4757;
+}
+
+.alert-title {
+    margin: 0 0 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.alert-info .alert-title {
+    color: #00c3ff;
+}
+
+.alert-success .alert-title {
+    color: #00ff80;
+}
+
+.alert-warning .alert-title {
+    color: #ffc100;
+}
+
+.alert-danger .alert-title {
+    color: #ff4757;
+}
+
+/* ====================================
+   7. TYPOGRAPHY
+   ==================================== */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+    margin-bottom: 1.5rem;
+}
+
+.text-gradient {
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.text-highlight { color: var(--highlight); }
+.text-accent { color: var(--accent-color); }
+.text-secondary { color: var(--secondary-color); }
+
+/* ====================================
+   8. UTILITY CLASSES & COMPONENTS
+   ==================================== */
+
+/* Admin Interface Elements */
+.admin-user-id,
+.current-datetime {
+    position: fixed;
+    bottom: 10px;
+    background: rgba(10, 10, 26, 0.8);
+    color: var(--secondary-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    z-index: 9999;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.admin-user-id {
+    right: 10px;
+}
+
+.current-datetime {
+    left: 10px;
+}
+
+.admin-user-id span {
+    color: var(--accent-color);
+    font-weight: bold;
+}

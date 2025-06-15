@@ -1,0 +1,175 @@
+/**
+ * StyleFolio - Background Effects
+ * Professional animated backgrounds for your portfolio sections
+ * 
+ * Features:
+ * ✨ Animated particle effects in all sections
+ * 🔲 Grid patterns in key sections (Hero, Portfolio, Experience, Contact)
+ * 🎨 Customizable colors and opacity
+ * ⚡ Optimized performance with CSS animations
+ * 
+ * How to Customize:
+ * - Change colors by modifying the rgba values
+ * - Adjust opacity for subtler/stronger effects
+ * - Modify background-size for different pattern scales
+ */
+
+/* ====================================
+   CUSTOMIZABLE SETTINGS
+   ==================================== */
+
+/*
+You can easily customize these effects by modifying:
+
+GRID COLORS:
+- rgba(138, 43, 226, 0.3) = Purple grid lines
+- Change the last number (0.3) to make lighter (0.1) or darker (0.5)
+
+PARTICLE COLORS:  
+- rgba(0, 255, 255, 0.8) = Cyan particles
+- rgba(138, 43, 226, 0.6) = Purple particles
+
+ANIMATION SPEED:
+- 150s = Slow, smooth movement
+- Change to 100s for faster, 200s for slower
+
+PATTERN SIZE:
+- 50px 50px = Grid size
+- 80px 80px = Large particle spacing
+- 120px 120px = Small particle spacing
+*/
+
+/* ====================================
+   IMPLEMENTATION GUIDE
+   ==================================== */
+
+/*
+SECTION BACKGROUND PATTERN:
+
+ODD SECTIONS (Grid + Particles):
+✅ Hero Section
+✅ Portfolio Section  
+✅ Experience Section
+✅ Contact Section
+
+EVEN SECTIONS (Particles only):
+✅ Skills Section
+✅ Education Section
+✅ Testimonials Section
+
+HTML STRUCTURE FOR ODD SECTIONS:
+<section class="hero-section"> <!-- or portfolio-section, experience-section, contact-section -->
+    <div class="section-background">
+        <div class="bg-grid"></div>
+        <div class="bg-particles"></div>
+    </div>
+    <!-- Your section content here -->
+</section>
+
+HTML STRUCTURE FOR EVEN SECTIONS:
+<section class="skills-section"> <!-- or education-section, testimonials-section -->
+    <div class="section-background">
+        <div class="bg-particles"></div>
+    </div>
+    <!-- Your section content here -->
+</section>
+*/
+
+/* ====================================
+   BACKGROUND PATTERNS
+   ==================================== */
+
+/* ====================================
+   PROFESSIONAL BACKGROUND EFFECTS
+   ==================================== */
+
+/* Grid Pattern - Creates professional geometric background */
+.bg-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(138, 43, 226, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 43, 226, 0.3) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center center;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+/* Particle Animation - Creates dynamic floating effect */
+.bg-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(rgba(0, 255, 255, 0.8) 2px, transparent 2px),
+        radial-gradient(rgba(138, 43, 226, 0.6) 1px, transparent 1px);
+    background-size: 80px 80px, 120px 120px;
+    background-position: 0 0, 40px 40px;
+    opacity: 0.4;
+    animation: particleMove 150s linear infinite;
+    z-index: 2;
+}
+
+/* ====================================
+   SECTION BACKGROUND CONTAINER
+   ==================================== */
+
+.section-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* ====================================
+   BACKGROUND ANIMATIONS
+   ==================================== */
+
+@keyframes particleMove {
+    0% {
+        background-position: 0 0, 40px 40px;
+    }
+    100% {
+        background-position: 1000px 500px, 1040px 540px;
+    }
+}
+
+@keyframes glowPulse {
+    0% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* ====================================
+   GRADIENT BACKGROUNDS
+   ==================================== */
+
+.bg-gradient-primary {
+    background: linear-gradient(90deg, #12122a, #1e1e42);
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(135deg, #0a0a1a, #141428);
+}
+
+.bg-gradient-accent {
+    background: linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(0, 255, 255, 0.1));
+}

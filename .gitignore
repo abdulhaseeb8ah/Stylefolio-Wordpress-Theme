@@ -1,0 +1,84 @@
+# WordPress Core
+wp-admin/
+wp-includes/
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/upgrade/
+
+# WordPress Configuration
+wp-config.php
+wp-config-local.php
+wp-config-production.php
+
+# Node modules and build files
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Log files
+*.log
+error_log
+access_log
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Cache files
+*.cache
+wp-content/cache/
+wp-content/advanced-cache.php
+
+# Backup files
+*.bak
+*.backup
+*.sql
+*.gz
+
+# Local development
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Compiled CSS (if using preprocessors)
+*.css.map
+*.sass.cache
+
+# Dependencies
+vendor/
+composer.lock
+
+# Local WordPress installs (if this theme is in a larger WP install)
+wp-content/plugins/
+wp-content/mu-plugins/
+wp-content/themes/*/
+!wp-content/themes/stylefolio/
+
+# Uploads and media
+wp-content/uploads/
+uploads/

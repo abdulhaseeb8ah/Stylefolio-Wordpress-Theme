@@ -1,0 +1,814 @@
+/**
+ * StyleFolio - Skills Section
+ * Skills showcase and progress indicators
+ * 
+ * Note: Background effects are loaded from background-effects.css
+ * 
+ * Table of Contents:
+ * 1. Skills Layout
+ * 2. Skill Cards
+ * 3. Progress Bars
+ * 4. Animations
+ */
+
+/* ====================================
+   1. SKILLS LAYOUT
+   ==================================== */
+
+.skills-section {
+    position: relative;
+    padding: 100px 0;
+    background: linear-gradient(90deg, #12122a, #1e1e42);
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* ====================================
+   2. SKILLS BACKGROUND EFFECTS
+   ==================================== */
+
+/* Skills section uses particle effects for subtle animation */
+.skills-section .section-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.skills-section .bg-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(rgba(0, 255, 255, 0.4) 2px, transparent 2px),
+        radial-gradient(rgba(138, 43, 226, 0.3) 1px, transparent 1px);
+    background-size: 80px 80px, 120px 120px;
+    background-position: 0 0, 40px 40px;
+    opacity: 0.2;
+    animation: particleMove 150s linear infinite;
+    z-index: 2;
+}
+
+.bg-glow {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 40%;
+    background: radial-gradient(ellipse at center, 
+                               rgba(138, 43, 226, 0.15) 0%, 
+                               rgba(0, 255, 255, 0.1) 40%, 
+                               transparent 70%);
+    filter: blur(40px);
+    z-index: 3;
+    opacity: 0.4;
+    animation: glowPulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* Particle Animation */
+@keyframes particleMove {
+    0% {
+        background-position: 0 0, 40px 40px;
+    }
+    100% {
+        background-position: 1000px 500px, 1040px 540px;
+    }
+}
+
+
+
+/* ====================================
+   SECTION HEADER STYLES
+   ==================================== */
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.section-subtitle {
+    display: inline-block;
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    font-weight: 500;
+    margin-bottom: 15px;
+    position: relative;
+    letter-spacing: 1px;
+}
+
+.section-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin: 0 0 20px;    background: linear-gradient(90deg, var(--text-color), var(--secondary-color) 70%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    display: inline-block;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+.section-description {
+    max-width: 700px;
+    margin: 0 auto 25px;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.divider-line {
+    height: 2px;
+    width: 100px;
+    background: linear-gradient(90deg, transparent, var(--accent-color));
+}
+
+.divider-line:last-child {
+    background: linear-gradient(90deg, var(--accent-color), transparent);
+}
+
+.divider-icon {
+    color: var(--secondary-color);
+    margin: 0 15px;
+    font-size: 1.2rem;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.divider-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 1px solid var(--secondary-color);
+    animation: pulseRing 3s infinite;
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+}
+
+/* ====================================
+   SKILLS TABS STYLES
+   ==================================== */
+
+.skills-tabs-container {
+    margin-bottom: 60px;
+}
+
+.skills-tabs-nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 10;
+}
+
+.tab-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 30px;
+    margin: 0 10px;
+    background: rgba(20, 20, 40, 0.4);
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tab-button i {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.tab-button span {
+    position: relative;
+    z-index: 2;
+}
+
+.tab-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-darker));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.tab-button:hover,
+.tab-button.active {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--primary-color);
+}
+
+.tab-button:hover i,
+.tab-button.active i {
+    color: #ffffff !important;
+}
+
+.tab-button:hover::before,
+.tab-button.active::before {
+    opacity: 1;
+}
+
+.tab-button.active {
+    pointer-events: none;
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--primary-color);
+    z-index: 2;
+}
+
+.skills-tabs-content {
+    position: relative;
+    min-height: 400px;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ====================================
+   SKILLS GRID & CARDS
+   ==================================== */
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.skill-card {
+    background: rgba(20, 20, 40, 0.5);
+    border-radius: 10px;
+    padding: 30px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease-out;
+    z-index: 1;
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(0, 255, 255, 0.3);
+}
+
+.skill-card:hover::before {
+    transform: scaleX(1);
+}
+
+.skill-icon {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    position: relative;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 255, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.skill-icon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid var(--secondary-color);
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.skill-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.skill-description {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.skill-tech {
+    background: rgba(138, 43, 226, 0.1);
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.tech-label {
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.tech-tags {
+    color: var(--text-secondary);
+}
+
+.skill-hover-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 0%, rgba(138, 43, 226, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.skill-card:hover .skill-hover-effect {
+    opacity: 1;
+}
+
+/* ====================================
+   TECHNICAL SKILLS BARS
+   ==================================== */
+
+.technical-skills-container {
+    margin: 60px 0;
+    padding: 40px;
+    background: rgba(20, 20, 40, 0.4);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.technical-skills-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.1) 0%, transparent 70%);
+    z-index: -1;
+}
+
+.technical-skills-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 30px;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.technical-skills-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    border-radius: 3px;
+}
+
+.skills-bars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.skill-bar-item {
+    margin-bottom: 20px;
+}
+
+.skill-bar-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.skill-bar-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.skill-bar-percentage {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+.skill-bar {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.skill-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 5px;
+    position: relative;
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.1, 0.45, 0.1, 1);
+}
+
+.skill-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 100%;
+    background: var(--text-color);
+    border-radius: 0 5px 5px 0;
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+/* ====================================
+   CALL TO ACTION STYLES
+   ==================================== */
+
+.skills-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(45deg, rgba(138, 43, 226, 0.2), rgba(0, 255, 255, 0.2));
+    padding: 40px;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.skills-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    opacity: 0.2;
+    animation: rotateCTA 20s linear infinite;
+    z-index: 0;
+}
+
+
+/* Fix for button styles in skills section */
+.skills-cta .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Fix for cases with fewer skills */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+    min-height: 200px; /* Ensures consistent height even with fewer skills */
+}
+
+/* Ensures consistent tab heights */
+.tab-button {
+    min-height: 80px;
+    justify-content: center;
+}
+
+/* Empty state styling */
+.tab-content:empty::before {
+    content: 'No skills added yet. Add skills in the Customizer.';
+    display: block;
+    text-align: center;
+    padding: 30px;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+/* Fix for skill bar animation when customized */
+.skill-bar-fill[data-percentage="0"] {
+    width: 0 !important;
+}
+
+@keyframes rotateCTA {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.cta-content {
+    position: relative;
+    z-index: 1;
+}
+
+.cta-content h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 10px;
+}
+
+.cta-content p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ====================================
+   ANIMATION STYLES
+   ==================================== */
+
+[data-animation] {
+    opacity: 0;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+[data-animation="fade-in"] {
+    transform: translateY(30px);
+}
+
+[data-animation="fade-in-up"] {
+    transform: translateY(50px);
+}
+
+.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ====================================
+   RESPONSIVE STYLES
+   ==================================== */
+
+@media screen and (max-width: 1200px) {
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .skills-bars {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .skills-cta {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .cta-buttons {
+        margin-top: 20px;
+        justify-content: center;
+    }
+    
+    .tab-button {
+        padding: 12px 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .skills-section {
+        padding: 80px 0;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .skills-tabs-nav {
+        flex-wrap: wrap;
+    }
+    
+    .tab-button {
+        margin: 5px;
+        flex: 1 0 calc(33.333% - 10px);
+        min-width: 120px;
+    }
+    
+    .technical-skills-container {
+        padding: 30px 20px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+    }
+    
+    .skills-tabs-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .tab-button {
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    .tab-button.active::after {
+        display: none;
+    }
+    
+    .skill-card {
+        padding: 20px;
+    }
+    
+    .skills-cta {
+        padding: 30px 20px;
+    }
+    
+    .cta-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .cta-buttons .btn {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .skill-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .skill-title {
+        font-size: 1.2rem;
+    }
+}
+
+/* Timestamp for development reference: 2025-06-10 08:26:58 by abdulhaseeb2002 */
