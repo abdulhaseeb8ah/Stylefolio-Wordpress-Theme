@@ -2,6 +2,8 @@
 
 A modern, responsive WordPress portfolio theme designed for showcasing creative work and professional profiles.
 
+<img width="1279" height="769" alt="Screenshot 2025-06-14 200756" src="https://github.com/user-attachments/assets/e14306e0-bdc1-4f8d-8641-d8f30291ed18" />
+
 ## Features
 
 - Modern, clean design
